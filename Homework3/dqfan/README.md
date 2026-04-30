@@ -1,54 +1,119 @@
-# React + TypeScript + Vite
+# Homework 3 Stock Visualization
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a React, TypeScript, Vite, D3, and Tailwind CSS application for exploring stock data. It shows three linked views for the selected stock:
 
-Currently, two official plugins are available:
+- A stock price line chart using CSV files in `data/stockdata`
+- A T-SNE scatter plot using `data/tsne.csv`
+- A related news list using text files in `data/stocknews`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The stock selector at the top controls all three views.
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```text
+dqfan/
++-- data/
+|   +-- stockdata/      # Stock price CSV files
+|   +-- stocknews/      # News text files organized by ticker folder
+|   +-- tsne.csv        # T-SNE coordinates and stock categories
++-- src/
+|   +-- component/
+|   |   +-- LineChart.tsx
+|   |   +-- NewsList.tsx
+|   |   +-- TSNEScatter.tsx
+|   |   +-- options.tsx
+|   +-- App.tsx
+|   +-- main.tsx
++-- package.json
++-- vite.config.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Setup Instructions
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+These instructions assume Node.js and npm are already installed.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 1. Navigate to the project folder
+
+From the repository root:
+
+```bash
+cd Homework3/dqfan
 ```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Start the development server
+
+```bash
+npm run dev
+```
+
+### 4. Open the app
+
+Visit the local URL printed by Vite. Usually it is:
+
+```text
+http://localhost:5173/
+```
+
+## Build
+
+To check that the project compiles for production:
+
+```bash
+npm run build
+```
+
+The production output is generated in the `dist` folder.
+
+## Data Notes
+
+Stock price files are loaded from `data/stockdata`. Each CSV file should include columns such as:
+
+```text
+Date,Open,High,Low,Close,Volume
+```
+
+News files are loaded from `data/stocknews/<ticker>/`. The app supports news file names in this format:
+
+```text
+YYYY-MM-DD HH-MM_Title.txt
+```
+
+For example:
+
+```text
+2026-04-24 10-35_This Tech Company Is a Top AI Stock on Robinhood. .txt
+```
+
+The UI uses `GOOGL` as the displayed ticker for Alphabet, while the updated stock data and news folder use `GOOG`.
+
+## Available Scripts
+
+```bash
+npm run dev
+```
+
+Starts the Vite development server.
+
+```bash
+npm run build
+```
+
+Runs TypeScript checks and builds the production version.
+
+```bash
+npm run lint
+```
+
+Runs ESLint on the project.
+
+```bash
+npm run preview
+```
+
+Serves the production build locally after `npm run build`.
